@@ -23,19 +23,22 @@ var repositorySet = wire.NewSet(
 	repository.NewRepository,
 	repository.NewTransaction,
 	repository.NewUserRepository,
-	repository.NewAppRepository,
+	repository.NewTqAppRepository,
+	repository.NewTqDeveloperRepository,
 )
 
 var serviceSet = wire.NewSet(
 	service.NewService,
 	service.NewUserService,
-	service.NewAppService,
+	service.NewTqAppService,
+	service.NewTqDeveloperService,
 )
 
 var handlerSet = wire.NewSet(
 	handler.NewHandler,
 	handler.NewUserHandler,
-	handler.NewAppHandler,
+	handler.NewTqAppHandler,
+	handler.NewTqDeveloperHandler,
 )
 
 var serverSet = wire.NewSet(
