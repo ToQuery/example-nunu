@@ -2,20 +2,23 @@ package server
 
 import (
 	"context"
-	"github.com/go-co-op/gocron"
+	"example-nunu/internal/service"
 	"example-nunu/pkg/log"
+	"github.com/go-co-op/gocron"
 	"go.uber.org/zap"
 	"time"
 )
 
 type Task struct {
-	log       *log.Logger
-	scheduler *gocron.Scheduler
+	log          *log.Logger
+	scheduler    *gocron.Scheduler
+	tqAppService service.TqAppService
 }
 
-func NewTask(log *log.Logger) *Task {
+func NewTask(log *log.Logger, tqAppService service.TqAppService) *Task {
 	return &Task{
-		log: log,
+		log:          log,
+		tqAppService: tqAppService,
 	}
 }
 func (t *Task) Start(ctx context.Context) error {
