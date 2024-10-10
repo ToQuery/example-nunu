@@ -2,13 +2,11 @@ package server
 
 import (
 	"context"
-	"example-nunu/internal/service"
 	"example-nunu/pkg/log"
 )
 
 type Job struct {
-	log    *log.Logger
-	tsApps service.TqAppService
+	log *log.Logger
 }
 
 func NewJob(

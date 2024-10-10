@@ -1,7 +1,6 @@
 package server
 
 import (
-	"github.com/gin-gonic/gin"
 	apiV1 "example-nunu/api/v1"
 	"example-nunu/docs"
 	"example-nunu/internal/handler"
@@ -9,6 +8,7 @@ import (
 	"example-nunu/pkg/jwt"
 	"example-nunu/pkg/log"
 	"example-nunu/pkg/server/http"
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -19,6 +19,7 @@ func NewHTTPServer(
 	conf *viper.Viper,
 	jwt *jwt.JWT,
 	userHandler *handler.UserHandler,
+	tqAppHandler handler.TqAppHandler,
 ) *http.Server {
 	gin.SetMode(gin.DebugMode)
 	s := http.NewServer(
@@ -46,12 +47,18 @@ func NewHTTPServer(
 	s.GET("/", func(ctx *gin.Context) {
 		logger.WithContext(ctx).Info("hello")
 		apiV1.HandleSuccess(ctx, map[string]interface{}{
-			":)": "Thank you for using nunu!",
+			"0x00": "Hello World!",
+			":)":   "Thank you for using nunu!",
 		})
 	})
 
 	v1 := s.Group("/v1")
 	{
+		appRouter := v1.Group("/app").Use(middleware.ResponseEncryptHandlerMiddleware(logger, conf))
+		{
+			appRouter.GET("", tqAppHandler.GetTqApp)
+		}
+
 		// No route group has permission
 		noAuthRouter := v1.Group("/")
 		{

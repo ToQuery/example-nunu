@@ -59,5 +59,5 @@ func newApp(
 	job *server.Job,
 	task *server.Task,
 ) *app.App {
-	return app.NewApp(app.WithServer(httpServer, job, task), app.WithName("demo-server"))
+	return app.NewApp(app.WithServer(httpServer, job, task), app.WithName("example-nunu"))
 }
