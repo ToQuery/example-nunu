@@ -11,6 +11,30 @@ import (
 	"github.com/spf13/viper"
 )
 
+var repositorySet = wire.NewSet(
+	repository.NewDB,
+	//repository.NewRedis,
+	repository.NewRepository,
+	repository.NewTransaction,
+	repository.NewUserRepository,
+	repository.NewTqAppRepository,
+	repository.NewTqDeveloperRepository,
+)
+
+var serviceSet = wire.NewSet(
+	service.NewService,
+	service.NewUserService,
+	service.NewTqAppService,
+	service.NewTqDeveloperService,
+)
+
+var handlerSet = wire.NewSet(
+	handler.NewHandler,
+	handler.NewUserHandler,
+	handler.NewTqAppHandler,
+	handler.NewTqDeveloperHandler,
+)
+
 var serverSet = wire.NewSet(
 	server.NewTask,
 )
@@ -27,6 +51,9 @@ func newApp(
 
 func NewWire(*viper.Viper, *log.Logger) (*app.App, func(), error) {
 	panic(wire.Build(
+		repositorySet,
+		serviceSet,
+		handlerSet,
 		serverSet,
 		newApp,
 	))
