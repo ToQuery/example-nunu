@@ -13,7 +13,6 @@ type Job struct {
 
 func NewJob(
 	log *log.Logger,
-	tsApps service.TqAppService,
 ) *Job {
 	return &Job{
 		log: log,
